@@ -139,6 +139,9 @@ const date = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDa
     const kitName = (id) => (kits.find((k) => k.id === id) || {}).name || id;
     const o = p.stats?.overall || {};
     const w = o.wins ?? 0, g = o.games ?? (w + (o.losses ?? 0));
+    // Basic entry (known player, no match data): header + friendly empty state instead of zeroed stats.
+    const hasMatches = (o.games ?? 0) > 0 || (o.wins ?? 0) > 0 || Object.keys(p.stats?.perKit || {}).length > 0 || Object.keys(p.ranked?.perKit || {}).length > 0 || !!p.ranked?.overall || (p.recent || []).length > 0;
+    const noStats = !hasMatches;
     const pt = p.playtimeMinutes ? p.playtimeMinutes * 60 : p.playtime;
 
     root.append(el('div', { class: 'phead rv' }, body(p, 'body hero-body'),
@@ -147,9 +150,11 @@ const date = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDa
           p.rank ? el('span', { class: 'kitchip' }, p.rank) : null,
           el('span', { class: 'onl' }, el('i', { class: 'dot ' + (p.online ? 'on' : 'off') }), p.online ? 'Online' : 'Offline')),
         p.previousNames?.length ? el('p', { class: 'muted' }, 'Previously: ' + p.previousNames.join(', ')) : null,
-        el('p', { class: 'muted' }, [p.firstJoin ? 'Joined ' + date(p.firstJoin) : '', pt ? 'Playtime ' + fmtPlay(pt) : ''].filter(Boolean).join(' \u00b7 ')),
-        el('div', { class: 'stats' }, stat(num(g), 'games'), stat(num(w), 'wins'), stat(o.winrate != null ? o.winrate + '%' : pct(w, g), 'win rate'),
+        el('p', { class: 'muted' }, [(p.firstJoin ?? p.firstJoined) ? 'Joined ' + date(p.firstJoin ?? p.firstJoined) : '', pt ? 'Playtime ' + fmtPlay(pt) : ''].filter(Boolean).join(' \u00b7 ')),
+        noStats ? null : el('div', { class: 'stats' }, stat(num(g), 'games'), stat(num(w), 'wins'), stat(o.winrate != null ? o.winrate + '%' : pct(w, g), 'win rate'),
           stat(num(o.kills), 'kills'), stat(num(o.deaths), 'deaths'), stat(num(o.streak), 'streak'), stat(num(o.bestStreak), 'best streak')))));
+
+    if (noStats) { root.append(empty('No matches yet \u2014 stats appear after their first game.')); reveal(); return; }
 
     // Ranked: every kit (kits without a ranked game show Unranked), plus overall.
     const rkMap = p.ranked?.perKit || {};
