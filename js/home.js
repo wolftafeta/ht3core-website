@@ -2,7 +2,7 @@ import { CONFIG } from './config.js';
 import { getStatus, refreshMs, getKits, getRanked, getMatches } from './api.js';
 import { getRegionStatuses, regionCards, mergedOnline } from './regions.js';
 import { renderPanel, headsRow, updatedText } from './statuscard.js';
-import { el, icon, $, clear, head, playerLink, addressRows, skeleton, storeButton, mountChrome, syncPreview, empty, timeAgo, reveal, regionChip } from './ui.js';
+import { el, icon, $, clear, head, playerLink, addressRows, skeleton, storeButton, mountChrome, syncPreview, empty, timeAgo, reveal, regionChip, mountRegionToggle, failNode } from './ui.js';
 
 mountChrome('index.html');
 $('#ip').append(el('span', { class: 'play-label' }, 'Play'), addressRows('addr-rows hero-addr'));
@@ -27,11 +27,14 @@ async function refreshStatus() {
 box0();
 function box0() { $('#status').replaceChildren(skeleton(3)); }refreshStatus();
 setInterval(refreshStatus, refreshMs());
+let champTok = 0, tickTok = 0;
 async function champions() {
+  const mine = ++champTok;
   const box = clear($('#champs'));
   try {
     const kits = await getKits();
     const boards = await Promise.all(kits.map((k) => getRanked(k.id).catch(() => [])));
+    if (mine !== champTok) return;
     kits.forEach((k, i) => {
       const c = boards[i].find((e) => e.champion);
       const card = el('div', { class: 'card champ-card rv' }, el('div', { class: 'kitname' }, k.name));
@@ -40,18 +43,22 @@ async function champions() {
       box.append(card);
     });
     reveal(); syncPreview();
-  } catch (e) { box.append(empty("Couldn't load right now.")); }
+  } catch (e) { if (mine === champTok) box.append(failNode(e)); }
 }
 async function ticker() {
+  const mine = ++tickTok;
   const box = clear($('#ticker'));
   try {
     const ms = (await getMatches('ranked')).slice(0, 5);
+    if (mine !== tickTok) return;
     if (!ms.length) return box.append(empty('No ranked matches have been played yet.'));
     for (const m of ms) {
       box.append(el('div', { class: 'tick' }, head({ name: m.winner, uuid: m.winnerUuid }, 24, 'head sm'), playerLink(m.winner), ' beat ', playerLink(m.loser),
         el('span', { class: 'kitchip' }, m.kitName || m.kit), m.delta != null ? el('span', { class: 'delta up' }, '+' + m.delta) : null, regionChip(m.region), el('span', { class: 'muted' }, timeAgo(m.time))));
     }
     syncPreview();
-  } catch (e) { box.append(empty("Couldn't load right now.")); }
+  } catch (e) { if (mine === tickTok) box.append(failNode(e)); }
 }
+mountRegionToggle(() => { champions(); ticker(); });
 champions(); ticker();
+

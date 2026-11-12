@@ -124,7 +124,7 @@ export function storeButton(cls = '') {
     : el('span', { class: 'btn store soon ' + cls, 'aria-disabled': 'true' }, 'Store coming soon');
 }
 
-const PAGES = [['index.html', 'Home'], ['ranked.html', 'Ranked'], ['ranks.html', 'Info'], ['matches.html', 'Matches'], ['leaderboards.html', 'Leaderboards'], ['status.html', 'Status']];
+const PAGES = [['index.html', 'Home'], ['ranks.html', 'Info'], ['ranked.html', 'Ranked'], ['matches.html', 'Matches'], ['leaderboards.html', 'Leaderboards'], ['status.html', 'Status']];
 
 /** Builds nav + footer; call once per page. active = file name. */
 export function mountChrome(active) {
@@ -143,7 +143,7 @@ export function mountChrome(active) {
   const foot = el('footer', { class: 'foot' }, el('div', { class: 'wrap' },
     el('div', { class: 'fbrand' }, el('img', { src: 'assets/logo.png', alt: '', width: 28, height: 28 }), el('strong', {}, 'HT3Core'), el('span', { class: 'muted' }, addresses().map((a) => (a.name ? a.name + ' ' : '') + a.address).join(' \u00b7 '))),
     el('div', { class: 'muted' }, '\u00a9 2026 HT3Core. All rights reserved. Not affiliated with Mojang or Microsoft.'),
-    el('div', { class: 'muted' }, el('a', { href: 'legal.html' }, 'Terms and privacy'), ' \u00b7 Skins by mc-heads.net')));
+    el('div', { class: 'muted' }, el('a', { href: 'legal.html' }, 'Terms and privacy'), ' \u00b7 ', el('a', { href: CONFIG.DISCORD_URL, target: '_blank', rel: 'noopener' }, 'Discord'), ' \u00b7 Support: ', el('a', { href: 'mailto:ht3core.support@gmail.com' }, 'ht3core.support@gmail.com'), ' \u00b7 Skins by mc-heads.net')));
   document.body.append(foot);
   banner(dataState());
 }
