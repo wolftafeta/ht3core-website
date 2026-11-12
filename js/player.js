@@ -1,4 +1,4 @@
-﻿import { getPlayer, getKits } from './api.js';
+import { getPlayer, getKits } from './api.js';
 import { el, $, clear, body, tierBadge, mountChrome, syncPreview, empty, num, pct, fmtPlay, reveal, tabs, regionChip } from './ui.js';
 import { lineChart, donut, tierNameOf } from './chart.js';
 import { matchCard } from './matchcard.js';
@@ -28,13 +28,13 @@ function rankedCard(label, r) {
   const placed = r && r.tier && !r.unranked;
   // The Overall number is the SUM of the played kits' ELO; label it Combined so the big
   // number next to a (average-based) tier badge reads as intended.
-  const unit = /overall/i.test(String(label)) ? ' Combined ELO ' : ' ELO ';
+  const unit = /overall/i.test(String(label)) ? ' Points ' : ' Points ';
   const card = el('div', { class: 'card rv' + (r && r.champion ? ' champion' : '') }, el('div', { class: 'kitname' }, label));
   if (!placed) {
-    // Everyone starts at 1000: an unplayed kit shows the starting ELO, not an empty card.
-    card.append(el('span', { class: 'tier', style: '--c:#97A0B2' }, 'Unranked'), el('div', { class: 'elo' }, '1,000' + unit.trimEnd()));
+    // Fresh players start at 0 points: an unplayed kit shows 0, not an empty card.
+    card.append(el('span', { class: 'tier', style: '--c:#97A0B2' }, 'Unranked'), el('div', { class: 'elo' }, '0' + unit.trimEnd()));
   } else {
-    card.append(tierBadge(r), el('div', { class: 'elo' }, num(r.elo) + unit, regionChip(r.region)));
+    card.append(tierBadge(r), el('div', { class: 'elo' }, num(r.points ?? r.elo) + unit, regionChip(r.region)));
     if (r.pos) card.append(el('div', { class: 'muted' }, '#' + r.pos));
   }
   return card;
@@ -182,18 +182,18 @@ const date = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDa
         if (ex && ex.wins != null && ex.losses != null && ex.wins + ex.losses === (ex.games ?? -1)) { w = ex.wins; l = ex.losses; bestStreak = ex.bestStreak ?? bestStreak; }
         const none = w + l === 0;
         const now = sr[sr.length - 1].y, peak = Math.max(...sr.map((x) => x.y), all ? 0 : r.peak ?? 0);
-        const name = all ? 'Combined ELO' : kitName(id) + ' ELO';
+        const name = all ? 'Combined rating' : kitName(id) + ' rating';
         box.querySelector('.elo-grid')?.remove();
         box.append(el('div', { class: 'elo-grid' },
           lineChart(sr, { title: name + ' over time', peak: all ? undefined : r.peak, tiers: !all,
-            desc: `Current ${num(now)}${all ? ' (sum of every kit)' : ' ELO'}. Hover, tap or use the arrow keys to read a point.` }),
+            desc: `Current ${num(now)}${all ? ' (sum of every kit)' : ' rating'}. Hover, tap or use the arrow keys to read a point.` }),
           el('div', { class: 'elo-side' },
             donut([{ label: 'Wins', value: w, colour: '#4CC38A' }, { label: 'Losses', value: l, colour: '#E5646E' }],
               { title: 'Ranked wins and losses', big: none ? '\u2014' : pct(w, w + l), small: 'win rate' }),
-            el('div', { class: 'etiles' }, tile(num(now), all ? 'Combined ELO' : 'Current ELO'), tile(num(peak), 'Peak ELO'),
+            el('div', { class: 'etiles' }, tile(num(now), all ? 'Combined rating' : 'Current rating'), tile(num(peak), 'Peak rating'),
               tile(none ? '\u2014' : num(w + l), 'Ranked games'), all ? tile(none ? '\u2014' : num(bestStreak), 'Best ranked streak') : tile(tierNameOf(now), 'Tier')))));
       };
-      root.append(el('h2', {}, 'ELO history'), box);
+      root.append(el('h2', {}, 'Rating history'), box);
       const tabItems = chartIds.map((id) => [id, kitName(id)]);
       if (combined.length > 1) tabItems.unshift(['overall', 'Overall']);
       box.append(tabs(tabItems, tabItems[0][0], draw));

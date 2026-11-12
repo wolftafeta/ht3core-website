@@ -124,7 +124,7 @@ export function storeButton(cls = '') {
     : el('span', { class: 'btn store soon ' + cls, 'aria-disabled': 'true' }, 'Store coming soon');
 }
 
-const PAGES = [['index.html', 'Home'], ['ranked.html', 'Ranked'], ['ranks.html', 'Ranks'], ['matches.html', 'Matches'], ['leaderboards.html', 'Leaderboards'], ['status.html', 'Status']];
+const PAGES = [['index.html', 'Home'], ['ranked.html', 'Ranked'], ['ranks.html', 'Info'], ['matches.html', 'Matches'], ['leaderboards.html', 'Leaderboards'], ['status.html', 'Status']];
 
 /** Builds nav + footer; call once per page. active = file name. */
 export function mountChrome(active) {

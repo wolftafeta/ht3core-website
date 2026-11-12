@@ -1,5 +1,8 @@
 // Pure cross-region merge rules (no DOM, no fetch). Sources are listed main first; ties keep the earlier source.
-const eloOf = (r) => (r && typeof r.elo === 'number' && !r.unranked ? r.elo : -1);
+/** Points when the feed has them, else the old elo field (works with both feed versions). */
+export const ptsOf = (r) => (r ? (typeof r.points === 'number' ? r.points : typeof r.elo === 'number' ? r.elo : undefined) : undefined);
+const eloOf = (r) => (r && typeof ptsOf(r) === 'number' && !r.unranked ? ptsOf(r) : -1);
+const setPts = (r, v, usePoints) => { if (usePoints) r.points = v; else r.elo = v; return r; };
 const tms = (t) => (typeof t === 'number' ? (t < 1e11 ? t * 1000 : t) : new Date(t).getTime() || 0);
 const isObj = (r) => r && typeof r === 'object';
 
@@ -13,7 +16,7 @@ function ident() {
   };
 }
 function rank(rows, champOk) {
-  rows.sort((a, b) => b.elo - a.elo || String(a.name).localeCompare(String(b.name)));
+  rows.sort((a, b) => (ptsOf(b) ?? 0) - (ptsOf(a) ?? 0) || String(a.name).localeCompare(String(b.name)));
   rows.forEach((r, i) => { r.pos = i + 1; if (r.champion && !(i === 0 && champOk(r))) r.champion = false; });
   return rows;
 }
@@ -40,8 +43,8 @@ export function mergeOverall(overallSources, kitLists) {
     return e;
   };
   for (const rows of kitLists) for (const r of rows) {
-    if (!isObj(r) || !(r.elo >= 0)) continue;
-    const e = entry(r); e.sum += r.elo; e.kits++; e.tally[r.region] = (e.tally[r.region] || 0) + 1;
+    if (!isObj(r) || !(ptsOf(r) >= 0)) continue;
+    const e = entry(r); e.sum += ptsOf(r); e.kits++; if (typeof r.points === 'number') e.usePoints = true; e.tally[r.region] = (e.tally[r.region] || 0) + 1;
     e.ident = e.ident || r;
   }
   const donors = [];
@@ -58,12 +61,13 @@ export function mergeOverall(overallSources, kitLists) {
     const mine = e.metas.find((m) => m.region === region) || meta;
     const src = mine ? mine.row : base;
     const elo = e.kits ? e.sum : eloOf(src);
-    return { ...src, name: src.name || base.name, uuid: src.uuid || base.uuid, elo, region, _same: eloOf(src) === elo };
+    const up = e.kits ? !!e.usePoints : typeof src.points === 'number';
+    return setPts({ ...src, name: src.name || base.name, uuid: src.uuid || base.uuid, region, _same: eloOf(src) === elo }, elo, up);
   });
   const ladder = donors.filter((d) => !d.champion && d.tier != null).sort((a, b) => eloOf(a) - eloOf(b));
   for (const r of out) {
     if (!r._same) {   // summed ELO no longer matches the source row: borrow tier styling from the nearest ladder row at or below it
-      let d = null; for (const x of ladder) if (eloOf(x) <= r.elo) d = x;
+      let d = null; for (const x of ladder) if (eloOf(x) <= ptsOf(r)) d = x;
       for (const k of ['tier', 'symbol', 'colour', 'color', 'division']) { if (d && k in d) r[k] = d[k]; else delete r[k]; }
       r.champion = false;
     }
@@ -87,7 +91,7 @@ export function mergePlayers(sources) {
   const ids = new Set();
   for (const s of list) for (const k of [...Object.keys(s.p.ranked?.perKit || {}), ...Object.keys(s.p.stats?.perKit || {})]) ids.add(k);
   const perKit = {}, stats = {}, hist = {}, eloRegion = {}, regionOf = {};
-  let sum = 0, placed = 0;
+  let sum = 0, placed = 0, usePts = false;
   for (const k of ids) {
     let best = null;
     for (const s of list) {
@@ -95,7 +99,7 @@ export function mergePlayers(sources) {
       if (isObj(e) && (!best || eloOf(e) > eloOf(best.e))) best = { s, e };
     }
     const home = best ? best.s : list.find((s) => s.p.stats?.perKit?.[k]) || list[0];
-    if (best) { perKit[k] = { ...best.e, region: home.region }; if (eloOf(best.e) >= 0) { sum += best.e.elo; placed++; } }
+    if (best) { perKit[k] = { ...best.e, region: home.region }; if (eloOf(best.e) >= 0) { sum += ptsOf(best.e); placed++; if (typeof best.e.points === 'number') usePts = true; } }
     const st = home.p.stats?.perKit?.[k] || list.map((s) => s.p.stats?.perKit?.[k]).find(Boolean);
     if (st) stats[k] = st;
     if (home.p.eloHistory?.[k]) hist[k] = home.p.eloHistory[k];
@@ -103,7 +107,7 @@ export function mergePlayers(sources) {
   }
   const ovs = list.filter((s) => isObj(s.p.ranked?.overall)).sort((a, b) => eloOf(b.p.ranked.overall) - eloOf(a.p.ranked.overall));
   const overall = ovs.length ? { ...ovs[0].p.ranked.overall, region: ovs[0].region } : null;
-  if (overall && placed) { if (overall.elo !== sum) delete overall.pos; overall.elo = sum; }
+  if (overall && placed) { if (ptsOf(overall) !== sum) delete overall.pos; setPts(overall, sum, usePts || typeof overall.points === 'number'); }
   out.ranked = { ...(list[0].p.ranked || {}), perKit, ...(overall ? { overall } : {}) };
   if (Object.keys(stats).length) out.stats = { ...(out.stats || {}), perKit: stats };
   if (Object.keys(hist).length) out.eloHistory = hist; else delete out.eloHistory;

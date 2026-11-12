@@ -35,7 +35,7 @@ async function champions() {
     kits.forEach((k, i) => {
       const c = boards[i].find((e) => e.champion);
       const card = el('div', { class: 'card champ-card rv' }, el('div', { class: 'kitname' }, k.name));
-      if (c) card.append(head(c, 72, 'head big'), playerLink(c.name, 'cname'), el('div', { class: 'elo' }, c.elo + ' ELO ', regionChip(c.region)));
+      if (c) card.append(head(c, 72, 'head big'), playerLink(c.name, 'cname'), el('div', { class: 'elo' }, (c.points ?? c.elo) + ' Points ', regionChip(c.region)));
       else card.append(el('div', { class: 'vacant' }, 'Vacant'), el('div', { class: 'muted' }, 'Win ranked games and take #1'));
       box.append(card);
     });

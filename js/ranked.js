@@ -1,4 +1,5 @@
-﻿import { getKits, getRanked } from './api.js';
+import { ptsOf } from './merge.js';
+import { getKits, getRanked } from './api.js';
 import { el, $, clear, head, body, playerLink, tierBadge, tabs, mountChrome, syncPreview, empty, skeleton, num, reveal, regionChip, mountRegionToggle, failNode } from './ui.js';
 
 mountChrome('ranked.html');
@@ -10,7 +11,7 @@ function podium(top) {
   for (const e of order) {
     box.append(el('div', { class: `pod p${e.pos} rv` + (e.champion ? ' champion' : '') },
       body(e, 'body'), el('div', { class: 'medal' }, '#' + e.pos),
-      playerLink(e.name, 'cname'), tierBadge(e), el('div', { class: 'elo' }, num(e.elo) + ' ELO ', regionChip(e.region))));
+      playerLink(e.name, 'cname'), tierBadge(e), el('div', { class: 'elo' }, num(ptsOf(e)) + ' Points ', regionChip(e.region))));
   }
 }
 function table(list) {
@@ -18,10 +19,10 @@ function table(list) {
   if (!list.length) return box.append(empty('No ranked players for this kit yet. Play ranked matches to appear here.'));
   const rows = list.map((e) => el('tr', { class: e.champion ? 'champion' : '' },
     el('td', { class: 'pos' }, e.pos), el('td', {}, el('span', { class: 'who' }, head(e, 32, 'head sm'), playerLink(e.name))),
-    el('td', {}, tierBadge(e)), el('td', { class: 'num strong' }, num(e.elo), e.region ? ' ' : null, regionChip(e.region)),
+    el('td', {}, tierBadge(e)), el('td', { class: 'num strong' }, num(ptsOf(e)), e.region ? ' ' : null, regionChip(e.region)),
     el('td', { class: 'num hide-s' }, `${e.wins ?? 0} / ${e.losses ?? 0}`), el('td', { class: 'num hide-s' }, e.games ?? '')));
   box.append(el('div', { class: 'tablewrap rv' }, el('table', { class: 'tbl' },
-    el('thead', {}, el('tr', {}, ['#', 'Player', 'Tier', 'ELO', 'W / L', 'Games'].map((h, i) => el('th', { class: i > 2 ? 'num' + (i > 3 ? ' hide-s' : '') : '' }, h)))),
+    el('thead', {}, el('tr', {}, ['#', 'Player', 'Tier', 'Points', 'W / L', 'Games'].map((h, i) => el('th', { class: i > 2 ? 'num' + (i > 3 ? ' hide-s' : '') : '' }, h)))),
     el('tbody', {}, rows))));
 }
 let token = 0;

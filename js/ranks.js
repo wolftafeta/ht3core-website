@@ -19,7 +19,7 @@ const ROMAN = ['I', 'II', 'III', 'IV', 'V'];
       }
       box.append(el('div', { class: 'card tierrow rv' + (champ ? ' champion' : ''), style: `--c:${/^#[0-9a-f]{3,8}$/i.test(t.colour) ? t.colour : '#55ffff'}` },
         tierBadge({ tier: t.name, colour: t.colour, symbol: t.symbol, champion: champ }),
-        el('div', { class: 'range' }, champ ? range : range + ' ELO'),
+        el('div', { class: 'range' }, champ ? range : range + ' Points'),
         champ ? el('p', { class: 'muted' }, 'The #1 player of each kit, plus one overall.') : divs));
     }
     reveal(); syncPreview();

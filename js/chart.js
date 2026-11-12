@@ -1,4 +1,4 @@
-﻿// Tiny dependency-free SVG charts (CSP: no CDN libs). lineChart, barChart, donut. Sized from the container, redrawn on resize.
+// Tiny dependency-free SVG charts (CSP: no CDN libs). lineChart, barChart, donut. Sized from the container, redrawn on resize.
 import { el } from './ui.js';
 
 const NS = 'http://www.w3.org/2000/svg';
@@ -57,11 +57,11 @@ const line = (a, b) => el('div', {}, el('b', {}, a), b ? ' ' + b : '');
  */
 export function lineChart(points, opts = {}) {
   const pts = points.filter((p) => Number.isFinite(p.y));
-  const title = opts.title || 'ELO over time';
+  const title = opts.title || 'Rating over time';
   if (!pts.length) return frame(title, opts.desc, () => el('p', { class: 'empty' }, 'No data yet.'), 'ch-line-box');
   const ys = pts.map((p) => p.y);
   const peakY = Math.max(opts.peak ?? -Infinity, ...ys);
-  const summary = pts.length ? `${pts.length} points, from ${pts[0].y} to ${pts[pts.length - 1].y} ELO, peak ${peakY}.` : 'No data.';
+  const summary = pts.length ? `${pts.length} points, from ${pts[0].y} to ${pts[pts.length - 1].y}, peak ${peakY}.` : 'No data.';
   return frame(title, opts.desc, (W, tip) => {
     const H = W < 460 ? 220 : 280, m = { l: 44, r: 12, t: 12, b: 26 };
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
@@ -99,7 +99,7 @@ export function lineChart(points, opts = {}) {
       sel = Math.max(0, Math.min(last, i));
       const p = pts[sel];
       cursor.setAttribute('cx', X(sel)); cursor.setAttribute('cy', Y(p.y)); cursor.setAttribute('visibility', 'visible');
-      tip.show(X(sel), Y(p.y), [line(p.y + ' ELO', tierNameOf(p.y)),
+      tip.show(X(sel), Y(p.y), [line(p.y + ' rating', tierNameOf(p.y)),
         p.delta != null ? line((p.delta > 0 ? '+' : '') + p.delta, 'this match') : null, p.t ? el('div', { class: 'muted' }, dateText(p.t)) : null].filter(Boolean));
     };
     const at = (e) => { const r = svg.getBoundingClientRect(); return pts.length < 2 ? 0 : Math.round(((e.clientX - r.left) * (W / r.width) - m.l) / iw * last); };
