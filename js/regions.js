@@ -10,15 +10,22 @@ async function fetchOne(r) {
   const ping = pingStatus(r.ping || r.address);
   const feed = await fetchFeed(r);
   if (feed.detailed) return feed;
+  if (r.gistUser && r.gistId) {
+    const g = await fetchJson(`https://gist.githubusercontent.com/${encodeURIComponent(r.gistUser)}/${encodeURIComponent(r.gistId)}/raw/status.json?t=${Math.floor(Date.now() / 30000)}`);
+    if (g.detailed && g.up) return g;   // stale gist (> 10 min) falls through to the ping
+  }
   return (await ping) || { up: false };
 }
 
-async function fetchFeed(r, ms = 4000) {
+function fetchFeed(r) {
   const base = usableFeed(r.feed);
-  if (!base) return { up: false };
+  return base ? fetchJson(base + '/api/status') : Promise.resolve({ up: false });
+}
+
+async function fetchJson(url, ms = 4000) {
   const ac = new AbortController(), t = setTimeout(() => ac.abort(), ms);
   try {
-    const res = await fetch(base + '/api/status', { cache: 'no-store', signal: ac.signal });
+    const res = await fetch(url, { cache: 'no-store', signal: ac.signal });
     if (!res.ok) return { up: false };
     const d = await res.json();
     if (!d || typeof d !== 'object' || Array.isArray(d)) return { up: false };
