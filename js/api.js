@@ -1,4 +1,4 @@
-// Data layer: live status from mcsrvstat.us, everything else from the plugin's public gist.
+﻿// Data layer: live status from mcsrvstat.us, everything else from the plugin's public gist.
 // Falls back to data/sample/*.json (flagged as preview) when unset or unreachable.
 import { CONFIG } from './config.js';
 import { mergeKit, mergeOverall, mergeMatches, mergePlayers } from './merge.js';
@@ -200,10 +200,28 @@ export const getMatches = async (type = 'ranked') => {
   return src.length < 2 ? src[0].rows : mergeMatches(src);
 };
 
+/** Other regions' profile of one player: their feed first, then their own gist players.json. Never throws; a dead region is skipped. */
+async function playerFromOthers(name) {
+  if (!configured()) return [];
+  const l = regions(), mi = Math.max(0, l.findIndex((r) => r.id === 'main')), key = String(name).toLowerCase();
+  const got = await Promise.all(l.filter((_, i) => i !== mi).map(async (r) => {
+    const base = usableFeed(r.feed);
+    if (base) { try { return { region: r.name, data: await getJson(base + '/api/player/' + encodeURIComponent(name), 4000) }; } catch (e) { /* try the gist */ } }
+    if (/^[A-Za-z0-9_-]+$/.test(r.gistUser) && /^[a-f0-9]+$/i.test(r.gistId)) {
+      try {
+        const all = await getJson(`https://gist.githubusercontent.com/${r.gistUser}/${r.gistId}/raw/players.json?t=${Math.floor(Date.now() / 60000)}`, 5000);
+        const p = all && ((Object.hasOwn(all, key) ? all[key] : null) || Object.values(all).find((x) => x && String(x.name).toLowerCase() === key));
+        if (p && typeof p === 'object') return { region: r.name, data: p };
+      } catch (e) { /* region unreachable */ }
+    }
+    return null;
+  }));
+  return got.filter(Boolean);
+}
 /** Player: main profile + extra regions, merged per kit (better region wins). Main-only when no other region answers. */
 export async function getPlayer(name) {
   const ok = /^[A-Za-z0-9_]{1,16}$/.test(String(name));
-  const ex = ok && extras().length ? fromExtras('/player/' + encodeURIComponent(name)) : Promise.resolve([]);
+  const ex = ok ? playerFromOthers(name) : Promise.resolve([]);
   let main = null, err = null;
   try { main = await getPlayerMain(name); } catch (e) { err = e; }
   const have = (await ex).filter((s) => s.data && typeof s.data === 'object' && !Array.isArray(s.data))
