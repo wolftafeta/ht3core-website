@@ -14,10 +14,13 @@ function syncKits() {
 }
 let kitList = [];
 const tabsFor = () => tabs([['all', 'All kits'], ...kitList.map((k) => [k.id, k.name])], kit, (id) => { kit = id; show(); });
+let token = 0, initToken = 0;
 async function show() {
+  const mine = ++token;
   const box = $('#table'); box.replaceChildren(skeleton(8));
   try {
     const list = await getLeaderboard(type, kit);
+    if (mine !== token) return;
     clear(box);
     if (!list.length) return box.append(empty('Nothing here yet. Check back after a few matches.'));
     const label = TYPES.find((t) => t[0] === type)[1];
@@ -27,12 +30,14 @@ async function show() {
         el('td', { class: 'pos' }, e.pos ?? i + 1), el('td', {}, el('span', { class: 'who' }, head(e, 32, 'head sm'), playerLink(e.name))),
         el('td', { class: 'num strong' }, type === 'winrate' ? num(e.value) + '%' : num(e.value))))))));
     reveal(); syncPreview();
-  } catch (e) { clear(box).append(failNode(e)); }
+  } catch (e) { if (mine === token) clear(box).append(failNode(e)); }
 }
 async function init() {
+  const me = ++initToken;
   clear($('#tabs')).append(tabs(TYPES, type, (id) => { type = id; syncKits(); show(); }));
   kitList = [];
   try { kitList = await getKits(); } catch (e) { /* only "All kits" */ }
+  if (me !== initToken) return;
   $('#kits').classList.add('subtabs');
   syncKits();
   show();

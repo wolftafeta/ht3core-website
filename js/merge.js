@@ -2,7 +2,7 @@
 /** Points when the feed has them, else the old elo field (works with both feed versions). */
 export const ptsOf = (r) => (r ? (typeof r.points === 'number' ? r.points : typeof r.elo === 'number' ? r.elo : undefined) : undefined);
 const eloOf = (r) => (r && typeof ptsOf(r) === 'number' && !r.unranked ? ptsOf(r) : -1);
-const setPts = (r, v, usePoints) => { if (usePoints) r.points = v; else r.elo = v; return r; };
+const setPts = (r, v, usePoints) => { if (usePoints) { r.points = v; delete r.elo; } else { r.elo = v; delete r.points; } return r; };
 const tms = (t) => (typeof t === 'number' ? (t < 1e11 ? t * 1000 : t) : new Date(t).getTime() || 0);
 const isObj = (r) => r && typeof r === 'object';
 

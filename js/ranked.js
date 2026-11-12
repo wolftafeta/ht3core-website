@@ -38,9 +38,12 @@ async function show(kit, label = 'Overall') {
     reveal(); syncPreview();
   } catch (e) { if (mine === token) clear($('#table')).append(failNode(e)); return; }
 }
+let initToken = 0;
 async function init() {
+  const me = ++initToken;
   let kits = [];
   try { kits = await getKits(); } catch (e) { /* tabs still work with Overall */ }
+  if (me !== initToken) return;
   const items = [['overall', 'Overall'], ...kits.map((k) => [k.id, k.name])];
   const labelOf = (id) => (items.find((i) => i[0] === id) || [id, id])[1];
   const start = (location.hash || '').slice(1) || 'overall';

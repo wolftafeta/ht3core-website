@@ -4,15 +4,18 @@ import { matchCard } from './matchcard.js';
 
 mountChrome('matches.html');
 
+let token = 0;
 async function show(type) {
+  const mine = ++token;
   const box = $('#list'); box.replaceChildren(skeleton(6));
   try {
     const ms = await getMatches(type);
+    if (mine !== token) return;
     clear(box);
     if (!ms.length) return box.append(empty('No matches here yet. They show up after the next duel.'));
     ms.forEach((m) => box.append(matchCard(m)));
     reveal(); syncPreview();
-  } catch (e) { clear(box).append(failNode(e)); }
+  } catch (e) { if (mine === token) clear(box).append(failNode(e)); }
 }
 if ($('#list')) {
   let cur = 'ranked';
