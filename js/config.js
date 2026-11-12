@@ -5,8 +5,8 @@ export const CONFIG = {
   SITE_NAME: 'HT3Core',
   SERVER_ADDRESS: 'ht3core.com',         // shown + used for live status (mcsrvstat.us)
   FEED_URL: 'http://na.ht3core.com:8095/api',                          // plugin HTTP API, e.g. 'https://api.example.com/api'. http:// works only when testing on localhost (optional)
-  GIST_USER: 'YOUR_GITHUB_USER',                // owner of the public gist the plugin publishes to
-  GIST_ID: 'YOUR_GIST_ID',                      // id from the gist URL
+  GIST_USER: 'wolftafeta',                      // owner of the public gist the plugin publishes to
+  GIST_ID: '694356acbdae715baf25f7b1f4af953d',  // id from the gist URL
   // Regions (STATUS only; stats/leaderboards use FEED_URL). feed = plugin web-feed base WITHOUT /api.
   REGIONS: [
     { id: 'main', name: 'NA', address: 'na.ht3core.com', ping: 'na.ht3core.com', feed: 'http://na.ht3core.com:8095' },
