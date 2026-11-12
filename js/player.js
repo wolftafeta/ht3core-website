@@ -187,6 +187,10 @@ const date = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDa
         if (ex && ex.wins != null && ex.losses != null && ex.wins + ex.losses === (ex.games ?? -1)) { w = ex.wins; l = ex.losses; bestStreak = ex.bestStreak ?? bestStreak; }
         const none = w + l === 0;
         const now = sr[sr.length - 1].y, peak = Math.max(...sr.map((x) => x.y), all ? 0 : r.peak ?? 0);
+        // Points tiles: feed points / pointsPeak first, then the history-derived values (older feeds).
+        const nn = (v) => (typeof v === 'number' && isFinite(v) ? v : undefined);
+        const curPts = nn(ex?.points) ?? now;
+        const peakPts = nn(ex?.pointsPeak) ?? Math.max(curPts, nn(ex?.points) != null ? 0 : peak);
         const name = all ? 'Combined rating' : kitName(id) + ' rating';
         box.querySelector('.elo-grid')?.remove();
         box.append(el('div', { class: 'elo-grid' },
@@ -195,7 +199,7 @@ const date = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDa
           el('div', { class: 'elo-side' },
             donut([{ label: 'Wins', value: w, colour: '#4CC38A' }, { label: 'Losses', value: l, colour: '#E5646E' }],
               { title: 'Ranked wins and losses', big: none ? '\u2014' : pct(w, w + l), small: 'win rate' }),
-            el('div', { class: 'etiles' }, tile(num(now), all ? 'Combined rating' : 'Current rating'), tile(num(peak), 'Peak rating'),
+            el('div', { class: 'etiles' }, tile(num(curPts), all ? 'Combined Points' : 'Current Points'), tile(num(peakPts), 'Peak Points'),
               tile(none ? '\u2014' : num(w + l), 'Ranked games'), all ? tile(none ? '\u2014' : num(bestStreak), 'Best ranked streak') : tile(tierNameOf(now), 'Tier')))));
       };
       root.append(el('h2', {}, 'Rating history'), box);
