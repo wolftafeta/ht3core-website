@@ -1,0 +1,122 @@
+[
+ {
+  "pos": 1,
+  "uuid": "MHF_Steve",
+  "name": "Player_01",
+  "value": 812
+ },
+ {
+  "pos": 2,
+  "uuid": "MHF_Alex",
+  "name": "Player_02",
+  "value": 766
+ },
+ {
+  "pos": 3,
+  "uuid": "MHF_Steve",
+  "name": "Player_03",
+  "value": 736
+ },
+ {
+  "pos": 4,
+  "uuid": "MHF_Alex",
+  "name": "Player_04",
+  "value": 708
+ },
+ {
+  "pos": 5,
+  "uuid": "MHF_Steve",
+  "name": "Player_05",
+  "value": 593
+ },
+ {
+  "pos": 6,
+  "uuid": "MHF_Alex",
+  "name": "Player_06",
+  "value": 556
+ },
+ {
+  "pos": 7,
+  "uuid": "MHF_Steve",
+  "name": "Player_07",
+  "value": 502
+ },
+ {
+  "pos": 8,
+  "uuid": "MHF_Alex",
+  "name": "Player_08",
+  "value": 418
+ },
+ {
+  "pos": 9,
+  "uuid": "MHF_Steve",
+  "name": "Player_09",
+  "value": 392
+ },
+ {
+  "pos": 10,
+  "uuid": "MHF_Alex",
+  "name": "Player_10",
+  "value": 322
+ },
+ {
+  "pos": 11,
+  "uuid": "MHF_Steve",
+  "name": "Player_11",
+  "value": 262
+ },
+ {
+  "pos": 12,
+  "uuid": "MHF_Alex",
+  "name": "Player_12",
+  "value": 205
+ },
+ {
+  "pos": 13,
+  "uuid": "MHF_Steve",
+  "name": "Player_13",
+  "value": 139
+ },
+ {
+  "pos": 14,
+  "uuid": "MHF_Alex",
+  "name": "Player_14",
+  "value": 74
+ },
+ {
+  "pos": 15,
+  "uuid": "MHF_Steve",
+  "name": "Player_15",
+  "value": 16
+ },
+ {
+  "pos": 16,
+  "uuid": "MHF_Alex",
+  "name": "Player_16",
+  "value": -43
+ },
+ {
+  "pos": 17,
+  "uuid": "MHF_Steve",
+  "name": "Player_17",
+  "value": -101
+ },
+ {
+  "pos": 18,
+  "uuid": "MHF_Alex",
+  "name": "Player_18",
+  "value": -157
+ },
+ {
+  "pos": 19,
+  "uuid": "MHF_Steve",
+  "name": "Player_19",
+  "value": -221
+ },
+ {
+  "pos": 20,
+  "uuid": "MHF_Alex",
+  "name": "Player_20",
+  "value": -291
+ }
+]

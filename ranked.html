@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://crafatar.com https://minotar.net; connect-src 'self' https://api.mcsrvstat.us https://gist.githubusercontent.com http://ht3core.com:8095 https://ht3core.com http://euht3corecom.blockworlds.io:25384; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ranked - HT3Core</title>
+<meta name="description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<meta name="theme-color" content="#0B0D12">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HT3Core">
+<meta property="og:title" content="Ranked - HT3Core">
+<meta property="og:description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<!-- TODO: replace SITE_URL with the final site address (e.g. youruser.github.io/repo or your domain) in every og:image/og:url -->
+<meta property="og:image" content="https://SITE_URL/assets/hub-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<header class="pagehead"><div class="banner-bg" aria-hidden="true"></div><div class="wrap pagehead-in"><h1>Ranked ladder</h1><p>Each kit has its own ELO. You start at 1000 ELO and get a tier after your first ranked game in a kit: win and you are Silver, lose and you are Bronze.</p></div></header>
+<section class="wrap sec"><div id="tabs"></div><div id="podium" class="podium"></div><div id="table"></div></section>
+</main>
+<script type="module" src="js/ranked-boot.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,122 @@
+[
+ {
+  "pos": 1,
+  "uuid": "MHF_Steve",
+  "name": "Player_01",
+  "value": 81.1
+ },
+ {
+  "pos": 2,
+  "uuid": "MHF_Alex",
+  "name": "Player_02",
+  "value": 78.5
+ },
+ {
+  "pos": 3,
+  "uuid": "MHF_Steve",
+  "name": "Player_03",
+  "value": 77.3
+ },
+ {
+  "pos": 4,
+  "uuid": "MHF_Alex",
+  "name": "Player_04",
+  "value": 75.7
+ },
+ {
+  "pos": 5,
+  "uuid": "MHF_Steve",
+  "name": "Player_05",
+  "value": 71.7
+ },
+ {
+  "pos": 6,
+  "uuid": "MHF_Alex",
+  "name": "Player_06",
+  "value": 69.9
+ },
+ {
+  "pos": 7,
+  "uuid": "MHF_Steve",
+  "name": "Player_07",
+  "value": 68
+ },
+ {
+  "pos": 8,
+  "uuid": "MHF_Alex",
+  "name": "Player_08",
+  "value": 65.4
+ },
+ {
+  "pos": 9,
+  "uuid": "MHF_Steve",
+  "name": "Player_09",
+  "value": 64.4
+ },
+ {
+  "pos": 10,
+  "uuid": "MHF_Alex",
+  "name": "Player_10",
+  "value": 62.7
+ },
+ {
+  "pos": 11,
+  "uuid": "MHF_Steve",
+  "name": "Player_11",
+  "value": 60.3
+ },
+ {
+  "pos": 12,
+  "uuid": "MHF_Alex",
+  "name": "Player_12",
+  "value": 58.8
+ },
+ {
+  "pos": 13,
+  "uuid": "MHF_Steve",
+  "name": "Player_13",
+  "value": 55.3
+ },
+ {
+  "pos": 14,
+  "uuid": "MHF_Alex",
+  "name": "Player_14",
+  "value": 52.7
+ },
+ {
+  "pos": 15,
+  "uuid": "MHF_Steve",
+  "name": "Player_15",
+  "value": 50.6
+ },
+ {
+  "pos": 16,
+  "uuid": "MHF_Alex",
+  "name": "Player_16",
+  "value": 50.1
+ },
+ {
+  "pos": 17,
+  "uuid": "MHF_Steve",
+  "name": "Player_17",
+  "value": 47.5
+ },
+ {
+  "pos": 18,
+  "uuid": "MHF_Alex",
+  "name": "Player_18",
+  "value": 45.1
+ },
+ {
+  "pos": 19,
+  "uuid": "MHF_Steve",
+  "name": "Player_19",
+  "value": 43.4
+ },
+ {
+  "pos": 20,
+  "uuid": "MHF_Alex",
+  "name": "Player_20",
+  "value": 41.7
+ }
+]

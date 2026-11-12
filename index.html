@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://crafatar.com https://minotar.net; connect-src 'self' https://api.mcsrvstat.us https://gist.githubusercontent.com http://ht3core.com:8095 https://ht3core.com http://euht3corecom.blockworlds.io:25384; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home - HT3Core</title>
+<meta name="description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<meta name="theme-color" content="#0B0D12">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HT3Core">
+<meta property="og:title" content="Home - HT3Core">
+<meta property="og:description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<!-- TODO: replace SITE_URL with the final site address (e.g. youruser.github.io/repo or your domain) in every og:image/og:url -->
+<meta property="og:image" content="https://SITE_URL/assets/hub-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<header class="hero"><div class="hero-bg banner-bg" aria-hidden="true"></div><div class="wrap hero-in">
+  <img class="hero-logo" src="assets/logo.png" alt="" width="72" height="72">
+  <h1>HT3Core</h1>
+  <p class="lead">Competitive Minecraft PvP: ranked duels, kits, parties and parkour.</p>
+  <div id="ip" class="ip-row"></div>
+  <div class="cta"><a id="discord" class="btn primary" target="_blank" rel="noopener"></a><span id="store-slot"></span></div>
+</div></header>
+<section class="wrap sec"><div class="sh"><h2>Server status</h2><span id="upd" class="muted"></span></div><div id="status" aria-live="polite"></div></section>
+<section class="wrap sec"><div class="sh"><h2>Champions</h2><a href="ranked.html">Ranked ladder</a><p class="sub">The #1 player of each kit (one per kit, plus one overall).</p></div><div id="champs" class="grid champs"></div></section>
+<section class="wrap sec"><div class="sh"><h2>Recent ranked matches</h2><a href="matches.html">All matches</a></div><div id="ticker" class="ticker"></div></section>
+<section class="wrap sec"><div class="sh"><h2>How to get access</h2></div>
+  <p class="sub">HT3Core runs two regions, NA and EU. Use the in-game globe (region switcher) to move between them.</p>
+  <ol class="steps">
+    <li class="card"><b>1</b><h3>Join and link</h3><p>Join our Discord, then run <code>/link</code> with the code you get on the server to connect Minecraft and Discord.</p></li>
+    <li class="card"><b>2</b><h3>Verify</h3><p>Run <code>/verify</code>. Players with HT3 or higher on PvPTiers/MCTiers get instant access.</p></li>
+    <li class="card"><b>3</b><h3>Or boost the Discord</h3><p>Only 50 boosters hold a slot at once. When it is full you wait in the waitlist, and when a booster stops, their slot goes to the first in line.</p></li>
+  </ol>
+</section>
+</main>
+<script type="module" src="js/home-boot.js"></script>
+</body>
+</html>
+
+

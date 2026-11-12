@@ -1,0 +1,124 @@
+{
+ "online": 18,
+ "max": 100,
+ "playing": 8,
+ "queued": 3,
+ "inRanked": 4,
+ "tps": 19.9,
+ "uptimeSeconds": 187000,
+ "mcVersion": "1.21.11",
+ "motd": "HT3Core - sample MOTD",
+ "players": [
+  {
+   "name": "Player_01",
+   "uuid": "MHF_Steve",
+   "rank": "Owner",
+   "place": "In match"
+  },
+  {
+   "name": "Player_02",
+   "uuid": "MHF_Alex",
+   "rank": "Admin",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_03",
+   "uuid": "MHF_Steve",
+   "rank": "Helper",
+   "place": "In queue"
+  },
+  {
+   "name": "Player_04",
+   "uuid": "MHF_Alex",
+   "rank": "Helper",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_05",
+   "uuid": "MHF_Steve",
+   "rank": "VIP",
+   "place": "In match"
+  },
+  {
+   "name": "Player_06",
+   "uuid": "MHF_Alex",
+   "rank": "VIP",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_07",
+   "uuid": "MHF_Steve",
+   "rank": "VIP",
+   "place": "In queue"
+  },
+  {
+   "name": "Player_08",
+   "uuid": "MHF_Alex",
+   "rank": "VIP",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_09",
+   "uuid": "MHF_Steve",
+   "rank": "Member",
+   "place": "In match"
+  },
+  {
+   "name": "Player_10",
+   "uuid": "MHF_Alex",
+   "rank": "Member",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_11",
+   "uuid": "MHF_Steve",
+   "rank": "Member",
+   "place": "In queue"
+  },
+  {
+   "name": "Player_12",
+   "uuid": "MHF_Alex",
+   "rank": "Member",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_13",
+   "uuid": "MHF_Steve",
+   "rank": "Member",
+   "place": "In match"
+  },
+  {
+   "name": "Player_14",
+   "uuid": "MHF_Alex",
+   "rank": "Member",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_15",
+   "uuid": "MHF_Steve",
+   "rank": "Member",
+   "place": "In queue"
+  },
+  {
+   "name": "Player_16",
+   "uuid": "MHF_Alex",
+   "rank": "Member",
+   "place": "Hub"
+  },
+  {
+   "name": "Player_17",
+   "uuid": "MHF_Steve",
+   "rank": "Member",
+   "place": "In match"
+  },
+  {
+   "name": "Player_18",
+   "uuid": "MHF_Alex",
+   "rank": "Member",
+   "place": "Hub"
+  }
+ ],
+ "version": "1.21.11",
+ "serverName": "HT3Core",
+ "updatedAt": 1793658079446
+}

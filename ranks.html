@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://mc-heads.net https://crafatar.com https://minotar.net; connect-src 'self' https://api.mcsrvstat.us https://gist.githubusercontent.com http://ht3core.com:8095 https://ht3core.com http://euht3corecom.blockworlds.io:25384; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ranks - HT3Core</title>
+<meta name="description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<meta name="theme-color" content="#0B0D12">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HT3Core">
+<meta property="og:title" content="Ranks - HT3Core">
+<meta property="og:description" content="HT3Core Minecraft PvP server: ranked duels, leaderboards and live stats.">
+<!-- TODO: replace SITE_URL with the final site address (e.g. youruser.github.io/repo or your domain) in every og:image/og:url -->
+<meta property="og:image" content="https://SITE_URL/assets/hub-banner.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+<header class="pagehead"><div class="banner-bg" aria-hidden="true"></div><div class="wrap pagehead-in"><h1>Ranks</h1><p>Win ranked duels to gain ELO. Every tier up to Master is split into three divisions (I-III) of equal size. Ranked ELO is tracked per kit, plus an overall rating.</p></div></header>
+<section class="wrap sec">
+<div id="ladder" class="ladder"></div>
+<h2>How it works</h2>
+<ul class="facts">
+<li><strong>First game:</strong> you start at 1000 ELO. Win your first ranked game in a kit and you are Silver, lose and you are Bronze.</li>
+<li><strong>Champion:</strong> the #1 player (highest ELO) of each kit, among players with at least one ranked game. There is one Champion per kit and one overall.</li>
+<li><strong>Unranked</strong> queues do not change your ELO.</li></ul>
+<h2>Commands</h2>
+<div class="tablewrap"><table class="tbl cmds"><tbody>
+<tr><td><code>/ranked</code></td><td>Open the ranked queue menu</td></tr>
+<tr><td><code>/elo [player] [kit]</code></td><td>Show ranked ratings</td></tr>
+<tr><td><code>/stats [player]</code></td><td>Open a player's stats and profile (alias <code>/profile</code>)</td></tr>
+<tr><td><code>/rank</code></td><td>Open the ranked tier ladder: all tiers with their ELO ranges, the current Champion per kit and your own tier</td></tr>
+<tr><td><code>/link</code></td><td>Link your Minecraft account with Discord</td></tr>
+<tr><td><code>/leaderboard</code></td><td>The duels leaderboards (aliases <code>/lb</code>, <code>/top</code>)</td></tr>
+</tbody></table></div></section></main>
+<script type="module" src="js/ranks-boot.js"></script>
+</body>
+</html>
+

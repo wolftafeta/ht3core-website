@@ -1,0 +1,402 @@
+[
+ {
+  "id": "r0",
+  "time": 1793657809467,
+  "type": "ranked",
+  "kit": "sword",
+  "kitName": "Sword",
+  "score": "5-2",
+  "seconds": 165,
+  "winners": [
+   {
+    "name": "Player_01",
+    "eloBefore": 1779,
+    "eloAfter": 1790,
+    "delta": 11
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_06",
+    "eloBefore": 1779,
+    "eloAfter": 1768,
+    "delta": -11
+   }
+  ]
+ },
+ {
+  "id": "r1",
+  "time": 1793657539467,
+  "type": "ranked",
+  "kit": "axe",
+  "kitName": "Axe",
+  "score": "5-3",
+  "seconds": 124,
+  "winners": [
+   {
+    "name": "Player_04",
+    "eloBefore": 1587,
+    "eloAfter": 1604,
+    "delta": 17
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_09",
+    "eloBefore": 1587,
+    "eloAfter": 1570,
+    "delta": -17
+   }
+  ]
+ },
+ {
+  "id": "r2",
+  "time": 1793657269467,
+  "type": "ranked",
+  "kit": "mace",
+  "kitName": "Mace",
+  "score": "3-1",
+  "seconds": 63,
+  "winners": [
+   {
+    "name": "Player_07",
+    "eloBefore": 1333,
+    "eloAfter": 1360,
+    "delta": 27
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_12",
+    "eloBefore": 1333,
+    "eloAfter": 1306,
+    "delta": -27
+   }
+  ]
+ },
+ {
+  "id": "r3",
+  "time": 1793656999467,
+  "type": "ranked",
+  "kit": "spear",
+  "kitName": "Spear",
+  "score": "5-4",
+  "seconds": 226,
+  "winners": [
+   {
+    "name": "Player_10",
+    "eloBefore": 1434,
+    "eloAfter": 1443,
+    "delta": 9
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_15",
+    "eloBefore": 1434,
+    "eloAfter": 1425,
+    "delta": -9
+   }
+  ]
+ },
+ {
+  "id": "r4",
+  "time": 1793656729467,
+  "type": "ranked",
+  "kit": "netherite_pot",
+  "kitName": "Netherite Pot",
+  "score": "3-0",
+  "seconds": 230,
+  "winners": [
+   {
+    "name": "Player_13",
+    "eloBefore": 1619,
+    "eloAfter": 1633,
+    "delta": 14
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_18",
+    "eloBefore": 1619,
+    "eloAfter": 1605,
+    "delta": -14
+   }
+  ]
+ },
+ {
+  "id": "r5",
+  "time": 1793656459467,
+  "type": "ranked",
+  "kit": "diamond_pot",
+  "kitName": "Diamond Pot",
+  "score": "5-2",
+  "seconds": 107,
+  "winners": [
+   {
+    "name": "Player_16",
+    "eloBefore": 1670,
+    "eloAfter": 1679,
+    "delta": 9
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_01",
+    "eloBefore": 1670,
+    "eloAfter": 1661,
+    "delta": -9
+   }
+  ]
+ },
+ {
+  "id": "r6",
+  "time": 1793656189467,
+  "type": "ranked",
+  "kit": "smp",
+  "kitName": "SMP",
+  "score": "5-3",
+  "seconds": 167,
+  "winners": [
+   {
+    "name": "Player_19",
+    "eloBefore": 1689,
+    "eloAfter": 1700,
+    "delta": 11
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_04",
+    "eloBefore": 1689,
+    "eloAfter": 1678,
+    "delta": -11
+   }
+  ]
+ },
+ {
+  "id": "r7",
+  "time": 1793655919467,
+  "type": "ranked",
+  "kit": "early_game",
+  "kitName": "Early Game",
+  "score": "3-1",
+  "seconds": 116,
+  "winners": [
+   {
+    "name": "Player_02",
+    "eloBefore": 1216,
+    "eloAfter": 1227,
+    "delta": 11
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_07",
+    "eloBefore": 1216,
+    "eloAfter": 1205,
+    "delta": -11
+   }
+  ]
+ },
+ {
+  "id": "r8",
+  "time": 1793655649467,
+  "type": "ranked",
+  "kit": "late_game",
+  "kitName": "Late Game",
+  "score": "5-4",
+  "seconds": 222,
+  "winners": [
+   {
+    "name": "Player_05",
+    "eloBefore": 1431,
+    "eloAfter": 1443,
+    "delta": 12
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_10",
+    "eloBefore": 1431,
+    "eloAfter": 1419,
+    "delta": -12
+   }
+  ]
+ },
+ {
+  "id": "r9",
+  "time": 1793655379467,
+  "type": "ranked",
+  "kit": "end_game",
+  "kitName": "End Game",
+  "score": "3-0",
+  "seconds": 123,
+  "winners": [
+   {
+    "name": "Player_08",
+    "eloBefore": 1573,
+    "eloAfter": 1595,
+    "delta": 22
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_13",
+    "eloBefore": 1573,
+    "eloAfter": 1551,
+    "delta": -22
+   }
+  ]
+ },
+ {
+  "id": "r10",
+  "time": 1793655109467,
+  "type": "ranked",
+  "kit": "sword",
+  "kitName": "Sword",
+  "score": "5-2",
+  "seconds": 217,
+  "winners": [
+   {
+    "name": "Player_11",
+    "eloBefore": 1347,
+    "eloAfter": 1360,
+    "delta": 13
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_16",
+    "eloBefore": 1347,
+    "eloAfter": 1334,
+    "delta": -13
+   }
+  ]
+ },
+ {
+  "id": "r11",
+  "time": 1793654839467,
+  "type": "ranked",
+  "kit": "axe",
+  "kitName": "Axe",
+  "score": "5-3",
+  "seconds": 68,
+  "winners": [
+   {
+    "name": "Player_14",
+    "eloBefore": 1269,
+    "eloAfter": 1278,
+    "delta": 9
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_19",
+    "eloBefore": 1269,
+    "eloAfter": 1260,
+    "delta": -9
+   }
+  ]
+ },
+ {
+  "id": "r12",
+  "time": 1793654569467,
+  "type": "ranked",
+  "kit": "mace",
+  "kitName": "Mace",
+  "score": "3-1",
+  "seconds": 102,
+  "winners": [
+   {
+    "name": "Player_17",
+    "eloBefore": 1556,
+    "eloAfter": 1575,
+    "delta": 19
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_02",
+    "eloBefore": 1556,
+    "eloAfter": 1537,
+    "delta": -19
+   }
+  ]
+ },
+ {
+  "id": "r13",
+  "time": 1793654299467,
+  "type": "ranked",
+  "kit": "spear",
+  "kitName": "Spear",
+  "score": "5-4",
+  "seconds": 106,
+  "winners": [
+   {
+    "name": "Player_20",
+    "eloBefore": 1456,
+    "eloAfter": 1476,
+    "delta": 20
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_05",
+    "eloBefore": 1456,
+    "eloAfter": 1436,
+    "delta": -20
+   }
+  ]
+ },
+ {
+  "id": "r14",
+  "time": 1793654029467,
+  "type": "ranked",
+  "kit": "netherite_pot",
+  "kitName": "Netherite Pot",
+  "score": "3-0",
+  "seconds": 243,
+  "winners": [
+   {
+    "name": "Player_03",
+    "eloBefore": 1294,
+    "eloAfter": 1304,
+    "delta": 10
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_08",
+    "eloBefore": 1294,
+    "eloAfter": 1284,
+    "delta": -10
+   }
+  ]
+ },
+ {
+  "id": "r15",
+  "time": 1793653759467,
+  "type": "ranked",
+  "kit": "diamond_pot",
+  "kitName": "Diamond Pot",
+  "score": "5-2",
+  "seconds": 239,
+  "winners": [
+   {
+    "name": "Player_06",
+    "eloBefore": 1756,
+    "eloAfter": 1774,
+    "delta": 18
+   }
+  ],
+  "losers": [
+   {
+    "name": "Player_11",
+    "eloBefore": 1756,
+    "eloAfter": 1738,
+    "delta": -18
+   }
+  ]
+ }
+]

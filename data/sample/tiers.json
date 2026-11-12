@@ -1,0 +1,57 @@
+[
+ {
+  "name": "Bronze",
+  "colour": "#CD7F32",
+  "symbol": "â—‡",
+  "min": 0,
+  "max": 999,
+  "divisions": 3
+ },
+ {
+  "name": "Silver",
+  "colour": "#C0C0C0",
+  "symbol": "â—‡",
+  "min": 1000,
+  "max": 1199,
+  "divisions": 3
+ },
+ {
+  "name": "Gold",
+  "colour": "#FFD700",
+  "symbol": "â˜…",
+  "min": 1200,
+  "max": 1399,
+  "divisions": 3
+ },
+ {
+  "name": "Platinum",
+  "colour": "#5FE3D6",
+  "symbol": "â–",
+  "min": 1400,
+  "max": 1599,
+  "divisions": 3
+ },
+ {
+  "name": "Diamond",
+  "colour": "#5EB7FF",
+  "symbol": "âœ¦",
+  "min": 1600,
+  "max": 1799,
+  "divisions": 3
+ },
+ {
+  "name": "Master",
+  "colour": "#B26BFF",
+  "symbol": "âœ¦",
+  "min": 1800,
+  "max": 1999,
+  "divisions": 3
+ },
+ {
+  "name": "Champion",
+  "colour": "#FF4D6D",
+  "symbol": "â˜…",
+  "min": 2000,
+  "divisions": 0
+ }
+]

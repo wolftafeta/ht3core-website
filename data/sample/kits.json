@@ -1,0 +1,52 @@
+[
+ {
+  "id": "sword",
+  "name": "Sword",
+  "icon": "sword"
+ },
+ {
+  "id": "axe",
+  "name": "Axe",
+  "icon": "axe"
+ },
+ {
+  "id": "mace",
+  "name": "Mace",
+  "icon": "mace"
+ },
+ {
+  "id": "spear",
+  "name": "Spear",
+  "icon": "spear"
+ },
+ {
+  "id": "netherite_pot",
+  "name": "Netherite Pot",
+  "icon": "netherite_pot"
+ },
+ {
+  "id": "diamond_pot",
+  "name": "Diamond Pot",
+  "icon": "diamond_pot"
+ },
+ {
+  "id": "smp",
+  "name": "SMP",
+  "icon": "smp"
+ },
+ {
+  "id": "early_game",
+  "name": "Early Game",
+  "icon": "early_game"
+ },
+ {
+  "id": "late_game",
+  "name": "Late Game",
+  "icon": "late_game"
+ },
+ {
+  "id": "end_game",
+  "name": "End Game",
+  "icon": "end_game"
+ }
+]
