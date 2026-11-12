@@ -97,6 +97,11 @@ function foldStats(objs, latest) {
     if (!isNum(v)) { if (!(k in out) && v != null && !isObj(v)) out[k] = v; continue; }
     out[k] = /^(bestStreak|pointsPeak|peak)$/.test(k) ? MAXF(out[k], v) : /^(streak)$/.test(k) ? (r === latest ? v : out[k] ?? v) : SUM(out[k], v);
   }
+  // The plugin's own combined totals (it knows which rows are mirrored) beat summing; if several regions give one, the larger wins.
+  const cw = rows.map((r) => r.combined?.wins ?? r.combinedWins).filter(isNum), cl = rows.map((r) => r.combined?.losses ?? r.combinedLosses).filter(isNum);
+  if (cw.length) out.wins = Math.max(...cw);
+  if (cl.length) out.losses = Math.max(...cl);
+  if ((cw.length || cl.length) && 'games' in out) out.games = (out.wins ?? 0) + (out.losses ?? 0);
   for (const k of ['winrate', 'combined', 'combinedWins', 'combinedLosses']) delete out[k];
   return out;
 }
