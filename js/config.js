@@ -10,7 +10,7 @@ export const CONFIG = {
   // Regions (STATUS only; stats/leaderboards use FEED_URL). feed = plugin web-feed base WITHOUT /api.
   REGIONS: [
     { id: 'main', name: 'NA', address: 'na.ht3core.com', ping: 'na.ht3core.com', feed: 'http://na.ht3core.com:8095' },
-    { id: 'eu', name: 'EU', address: 'euht3corecom.blockworlds.io', ping: 'eu.ht3core.com', feed: 'http://euht3corecom.blockworlds.io:25384' },
+    { id: 'eu', name: 'EU', address: 'eu.ht3core.com', ping: 'eu.ht3core.com', feed: 'http://euht3corecom.blockworlds.io:25384' },
   ],
   STORE_URL: '',                                // empty = "Store coming soon"
   DISCORD_URL: 'https://discord.gg/FfxzUrbYCQ',

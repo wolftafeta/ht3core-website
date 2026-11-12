@@ -1,5 +1,5 @@
 import { getKits, getLeaderboard } from './api.js';
-import { el, $, clear, head, playerLink, tabs, mountChrome, syncPreview, empty, skeleton, num, reveal } from './ui.js';
+import { el, $, clear, head, playerLink, tabs, mountChrome, syncPreview, empty, skeleton, num, reveal, mountRegionToggle, failNode } from './ui.js';
 
 mountChrome('leaderboards.html');
 const TYPES = [['wins', 'Wins'], ['kills', 'Kills'], ['streak', 'Win streak'], ['winrate', 'Win rate']];
@@ -27,12 +27,15 @@ async function show() {
         el('td', { class: 'pos' }, e.pos ?? i + 1), el('td', {}, el('span', { class: 'who' }, head(e, 32, 'head sm'), playerLink(e.name))),
         el('td', { class: 'num strong' }, type === 'winrate' ? num(e.value) + '%' : num(e.value))))))));
     reveal(); syncPreview();
-  } catch (e) { clear(box).append(empty("Couldn't load right now. Please try again in a minute.")); }
+  } catch (e) { clear(box).append(failNode(e)); }
 }
-(async () => {
-  $('#tabs').append(tabs(TYPES, type, (id) => { type = id; syncKits(); show(); }));
+async function init() {
+  clear($('#tabs')).append(tabs(TYPES, type, (id) => { type = id; syncKits(); show(); }));
+  kitList = [];
   try { kitList = await getKits(); } catch (e) { /* only "All kits" */ }
   $('#kits').classList.add('subtabs');
   syncKits();
   show();
-})();
+}
+mountRegionToggle(() => { kit = 'all'; init(); });
+init();

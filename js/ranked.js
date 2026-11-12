@@ -1,5 +1,5 @@
 ﻿import { getKits, getRanked } from './api.js';
-import { el, $, clear, head, body, playerLink, tierBadge, tabs, mountChrome, syncPreview, empty, skeleton, num, reveal, regionChip } from './ui.js';
+import { el, $, clear, head, body, playerLink, tierBadge, tabs, mountChrome, syncPreview, empty, skeleton, num, reveal, regionChip, mountRegionToggle, failNode } from './ui.js';
 
 mountChrome('ranked.html');
 
@@ -35,18 +35,20 @@ async function show(kit, label = 'Overall') {
     podium(list.slice(0, 3));
     if (list.length > 3 || !list.length) table(list.slice(3)); else clear($('#table'));
     reveal(); syncPreview();
-  } catch (e) { clear($('#table')).append(empty("Couldn't load right now. Please try again in a minute.")); return; }
+  } catch (e) { if (mine === token) clear($('#table')).append(failNode(e)); return; }
 }
-(async () => {
+async function init() {
   let kits = [];
   try { kits = await getKits(); } catch (e) { /* tabs still work with Overall */ }
   const items = [['overall', 'Overall'], ...kits.map((k) => [k.id, k.name])];
   const labelOf = (id) => (items.find((i) => i[0] === id) || [id, id])[1];
   const start = (location.hash || '').slice(1) || 'overall';
-  $('#tabs').append(tabs(items, items.some((i) => i[0] === start) ? start : 'overall', (id) => { history.replaceState(null, '', '#' + id); show(id, labelOf(id)); }));
+  clear($('#tabs')).append(tabs(items, items.some((i) => i[0] === start) ? start : 'overall', (id) => { history.replaceState(null, '', '#' + id); show(id, labelOf(id)); }));
   const first = items.some((i) => i[0] === start) ? start : 'overall';
   show(first, labelOf(first));
-})();
+}
+mountRegionToggle(() => { clear($('#podium')); init(); });
+init();
 
 
 

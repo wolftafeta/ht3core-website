@@ -90,7 +90,40 @@ export async function getStatus() {
 }
 /** Poll interval: 15 s for the direct plugin API / preview, 2 min for the gist mirror. */
 export const refreshMs = () => (feedBase() || !gistConfigured() ? 15000 : 120000);
-export const getKits = async () => asList(await load('kits'));
+// ---- Region toggle (ranked / leaderboards / matches): NA = existing sources, others = that region's feed and/or gist only. ----
+const REGION_KEY = 'ht3-region';
+const mainId = () => (regions().find((r) => r.id === 'main') || regions()[0] || { id: 'main' }).id;
+let curRegion = null;
+/** [{id,name}] for the toggle. */
+export const regionList = () => regions().map((r) => ({ id: r.id, name: r.name }));
+export function currentRegion() {
+  if (curRegion) return curRegion;
+  let v = '';
+  try { v = localStorage.getItem(REGION_KEY) || ''; } catch (e) { /* storage blocked */ }
+  return (curRegion = regions().some((r) => r.id === v) ? v : mainId());
+}
+export function setRegion(id) {
+  if (!regions().some((r) => r.id === id)) return;
+  curRegion = id;
+  try { localStorage.setItem(REGION_KEY, id); } catch (e) { /* storage blocked */ }
+  memo.clear();
+}
+const isMainRegion = () => currentRegion() === mainId();
+const regionOffline = () => Object.assign(new Error('region data unavailable'), { regionOffline: true });
+/** Other region: its feed (https only here) then its own gist (CONFIG.REGIONS[].gistUser/gistId, optional). Never touches the data banner. */
+async function loadOther(file, ms = 5000) {
+  const r = regions().find((x) => x.id === currentRegion());
+  const base = r ? usableFeed(r.feed) : '', ep = endpoint(file);
+  const gist = r && /^[A-Za-z0-9_-]+$/.test(r.gistUser) && /^[a-f0-9]+$/i.test(r.gistId);
+  if (base && ep) { try { return await getJson(base + '/api' + ep, ms); } catch (e) { if (!gist) throw regionOffline(); } }
+  if (gist) {
+    try { return await getJson(`https://gist.githubusercontent.com/${r.gistUser}/${r.gistId}/raw/${file}.json?t=${Math.floor(Date.now() / 60000)}`, ms); }
+    catch (e) { throw regionOffline(); }
+  }
+  throw regionOffline();
+}
+const loadR = (file, ms) => (isMainRegion() ? load(file, ms) : loadOther(file, ms));
+export const getKits = async () => asList(await loadR('kits'));
 export const getTiers = async () => asList(await load('tiers'));
 
 // ---- Cross-region data: main = existing path above; other CONFIG.REGIONS are read-only extras (4 s, failures ignored). ----
@@ -103,7 +136,7 @@ export const usableFeed = (u) => {
 /** CONFIG.REGIONS read defensively: always a list of {id,name,feed}. */
 export function regions() {
   const l = Array.isArray(CONFIG.REGIONS) ? CONFIG.REGIONS.filter((r) => r && typeof r === 'object') : [];
-  return l.map((r, i) => ({ id: String(r.id || 'r' + i), name: String(r.name || r.id || 'Region ' + (i + 1)), feed: String(r.feed || ''), address: String(r.address || '').trim(), ping: String(r.ping || '').trim() }));
+  return l.map((r, i) => ({ id: String(r.id || 'r' + i), name: String(r.name || r.id || 'Region ' + (i + 1)), feed: String(r.feed || ''), address: String(r.address || '').trim(), ping: String(r.ping || '').trim(), gistUser: String(r.gistUser || ''), gistId: String(r.gistId || '') }));
 }
 /** Join addresses to show: one {name,address} per region that has one, else the single SERVER_ADDRESS. */
 export function addresses() {
@@ -133,8 +166,9 @@ const sources = (r, pick) => [...(r.main != null ? [{ region: mainName(), data: 
 const memo = new Map();
 const cached = (key, fn) => { const h = memo.get(key); if (h && Date.now() - h.t < 8000) return h.p; const p = fn(); memo.set(key, { t: Date.now(), p }); p.catch(() => memo.delete(key)); return p; };
 
-export const getRanked = (kit = 'overall') => cached('r:' + kit, () => rankedMerged(safe(kit || 'overall')));
+export const getRanked = (kit = 'overall') => cached(currentRegion() + ':r:' + kit, () => rankedMerged(safe(kit || 'overall')));
 async function rankedMerged(kit) {
+  if (!isMainRegion()) return asList(await loadOther('ranked-' + kit));
   const r = await fromAll(`/ranked?kit=${kit}&limit=100`, () => load('ranked-' + kit));
   if (!r.ex.length) { if (r.main == null) throw r.mainErr; return asList(r.main); }   // main only: exactly the old behaviour
   const src = sources(r, asList);
@@ -148,7 +182,7 @@ async function rankedMerged(kit) {
 }
 /** {Bronze:n,...,Champion:n} for the whole ladder of a kit, or null when the feed lacks it. */
 export const getLeaderboard = async (type = 'wins', kit = 'all') =>
-  asList(await load(`leaderboard-${safe(type)}-${safe(kit || 'all')}`));
+  asList(await loadR(`leaderboard-${safe(type)}-${safe(kit || 'all')}`));
 /** Accepts both {winner,loser,...} and the documented {winners:[{name,uuid,delta}],losers:[...],seconds}. */
 export function normMatch(m) {
   const w = m.winner ?? m.winners?.[0]?.name, l = m.loser ?? m.losers?.[0]?.name;
@@ -159,6 +193,7 @@ export function normMatch(m) {
 }
 export const getMatches = async (type = 'ranked') => {
   const t = type === 'unranked' ? 'unranked' : 'ranked';
+  if (!isMainRegion()) return asList(await loadOther('matches-' + t)).map(normMatch);
   const r = await fromAll(`/matches?type=${t}&limit=100`, () => load('matches-' + t));
   if (!r.ex.length) { if (r.main == null) throw r.mainErr; return asList(r.main).map(normMatch); }
   const src = sources(r, (d) => asList(d).map(normMatch));

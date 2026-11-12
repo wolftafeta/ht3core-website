@@ -1,12 +1,22 @@
 // Shared render helpers + page chrome. Feed text is only ever set via textContent.
 import { CONFIG } from './config.js';
-import { dataState, addresses } from './api.js';
+import { dataState, addresses, regionList, currentRegion, setRegion } from './api.js';
 
+/** Only relative, http(s) and (for src) data:image URLs may reach href/src. */
+const safeUrl = (u, k) => {
+  const s = u.trim().replace(/[\u0000- ]/g, '');
+  const m = /^([a-z][a-z0-9+.-]*):/i.exec(s);
+  if (!m) return true;
+  const p = m[1].toLowerCase();
+  return p === 'http' || p === 'https' || (k === 'src' && p === 'data' && /^data:image\//i.test(s));
+};
 /** el('div', {class:'x', onclick:fn}, 'text', childNode) - strings become text nodes. */
 export function el(tag, attrs, ...kids) {
   const n = document.createElement(tag);
   for (const [k, v] of Object.entries(attrs || {})) {
     if (v == null || v === false) continue;
+    if (/^on/i.test(k) && typeof v !== 'function') continue;                       // never create string event-handler attributes
+    if ((k === 'href' || k === 'src') && !safeUrl(String(v), k)) continue;         // drops javascript:/data:text URLs from feed data
     if (k === 'class') n.className = v;
     else if (k === 'style') n.style.cssText = v;   // CSSOM (not the style attribute) so a strict CSP is satisfied
     else if (k.startsWith('on') && typeof v === 'function') n.addEventListener(k.slice(2), v);
@@ -162,6 +172,22 @@ export function tabs(items, current, onPick) {
   };
   draw(current);
   return wrap;
+}
+
+/** NA | EU pills placed before the page's #tabs; onChange runs after the region is saved. */
+export function mountRegionToggle(onChange) {
+  const items = regionList().map((r) => [r.id, r.name]);
+  if (items.length < 2) return;
+  const t = tabs(items, currentRegion(), (id) => { setRegion(id); onChange(id); });
+  t.classList.add('rgtabs');
+  const host = el('div', { class: 'regionbar' }, t);
+  const anchor = $('#tabs'); if (anchor) anchor.before(host);
+}
+/** Friendly message for a failed load: EU-style "no data source yet" or the generic one. */
+export function failNode(e) {
+  return empty(e && e.regionOffline
+    ? 'EU data needs the EU mirror - coming soon. Switch to NA to see live stats.'
+    : "Couldn't load right now. Please try again in a minute.");
 }
 
 /** Entrance animation on scroll. */

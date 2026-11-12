@@ -102,6 +102,7 @@ code{font-family:ui-monospace,Consolas,monospace;background:#0B0D12;border:1px s
 /* tabs */
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px;border-bottom:1px solid var(--line)}
 .tab{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:8px 16px;font:inherit;font-weight:600;font-size:.9375rem;cursor:pointer;margin-bottom:-1px}
+.regionbar{margin-bottom:12px}.rgtabs{border-bottom:0;margin-bottom:0;gap:6px}.rgtabs .tab{border:1px solid var(--line);border-radius:999px;padding:4px 16px;margin-bottom:0;font-size:.8125rem}.rgtabs .tab.on{border-color:var(--accent);background:rgba(85,255,255,.08)}
 .tab:hover{color:var(--text)}.tab.on{color:var(--text);border-bottom-color:var(--accent)}.subtabs .tab{padding:4px 12px;font-size:.8125rem}
 
 /* ranks */
