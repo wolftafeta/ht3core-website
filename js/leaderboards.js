@@ -10,13 +10,15 @@ function syncKits() {
   const ok = KIT_TYPES.includes(type);
   if (!ok) kit = 'all';
   $('#kits').hidden = !ok;
-  $('#kits').replaceChildren(tabsFor());
+  $('#kits').replaceChildren(ok ? tabsFor() : '');
+  $('#kitnote').hidden = ok;
 }
 let kitList = [];
 const tabsFor = () => tabs([['all', 'All kits'], ...kitList.map((k) => [k.id, k.name])], kit, (id) => { kit = id; show(); });
 let token = 0, initToken = 0;
 async function show() {
   const mine = ++token;
+  if (!KIT_TYPES.includes(type)) kit = 'all';
   const box = $('#table'); box.replaceChildren(skeleton(8));
   try {
     const list = await getLeaderboard(type, kit);

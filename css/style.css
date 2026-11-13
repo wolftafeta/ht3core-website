@@ -236,7 +236,7 @@ img{max-width:100%}
 .ch-legend{list-style:none;margin:0;padding:0;font-size:.875rem;color:var(--muted)}
 .ch-legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
 .ch-tip{position:absolute;z-index:3;pointer-events:none;background:#0B0D12;border:1px solid var(--line2);border-radius:6px;padding:6px 9px;font-size:.8125rem;white-space:nowrap}
-.ch-tip[hidden]{display:none}
+.ch-tip[hidden]{display:none}#kits[hidden],#kitnote[hidden]{display:none}
 @media (prefers-reduced-motion:no-preference){.ch-fill{transition:width .2s}}
 
 /* player ELO layout: chart ~2/3, donut + stat tiles ~1/3, stacked on phones */
