@@ -255,3 +255,4 @@ img{max-width:100%}
 
 .addr-rows{display:flex;flex-direction:column;gap:8px;align-items:flex-start}.addr-row{display:flex;align-items:center;gap:8px}.addr-rg{font-family:var(--display);min-width:2.25rem;color:var(--accent)}
 .addr-rows .ip-btn{flex-direction:row;gap:16px;padding:8px 16px}.addr-rows .ip-text{font-size:1rem}.hero-addr{align-items:center}
+#champ-tabs .regionbar{margin:2px 0 14px}

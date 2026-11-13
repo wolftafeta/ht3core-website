@@ -1,5 +1,5 @@
 import { CONFIG } from './config.js';
-import { getStatus, refreshMs, getKits, getRanked, getMatches } from './api.js';
+import { getStatus, refreshMs, getKits, getRanked, getAllMatches } from './api.js';
 import { getRegionStatuses, regionCards, mergedOnline } from './regions.js';
 import { renderPanel, headsRow, updatedText } from './statuscard.js';
 import { el, icon, $, clear, head, playerLink, addressRows, skeleton, storeButton, mountChrome, syncPreview, empty, timeAgo, reveal, regionChip, mountRegionToggle, failNode } from './ui.js';
@@ -49,9 +49,9 @@ async function ticker() {
   const mine = ++tickTok;
   const box = clear($('#ticker'));
   try {
-    const ms = (await getMatches('ranked')).slice(0, 5);
+    const ms = (await getAllMatches('ranked')).slice(0, 5);
     if (mine !== tickTok) return;
-    if (!ms.length) return box.append(empty('No ranked matches have been played yet.'));
+    if (!ms.length) return box.append(empty('No ranked matches have been played yet in either region.'));
     for (const m of ms) {
       box.append(el('div', { class: 'tick' }, head({ name: m.winner, uuid: m.winnerUuid }, 24, 'head sm'), playerLink(m.winner), ' beat ', playerLink(m.loser),
         el('span', { class: 'kitchip' }, m.kitName || m.kit), m.delta != null ? el('span', { class: 'delta up' }, '+' + m.delta) : null, regionChip(m.region), el('span', { class: 'muted' }, timeAgo(m.time))));
@@ -59,6 +59,6 @@ async function ticker() {
     syncPreview();
   } catch (e) { if (mine === tickTok) box.append(failNode(e)); }
 }
-mountRegionToggle(() => { champions(); ticker(); });
+mountRegionToggle(() => { champions(); }, '#champ-tabs');
 champions(); ticker();
 

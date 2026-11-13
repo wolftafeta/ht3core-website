@@ -175,13 +175,13 @@ export function tabs(items, current, onPick) {
 }
 
 /** NA | EU pills placed before the page's #tabs; onChange runs after the region is saved. */
-export function mountRegionToggle(onChange) {
+export function mountRegionToggle(onChange, anchorSel = '#tabs') {
   const items = regionList().map((r) => [r.id, r.name]);
   if (items.length < 2) return;
   const t = tabs(items, currentRegion(), (id) => { setRegion(id); onChange(id); });
   t.classList.add('rgtabs');
   const host = el('div', { class: 'regionbar' }, t);
-  const anchor = $('#tabs'); if (anchor) anchor.before(host);
+  const anchor = $(anchorSel); if (anchor) anchor.before(host);
 }
 /** Friendly message for a failed load: EU-style "no data source yet" or the generic one. */
 export function failNode(e) {

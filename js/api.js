@@ -111,8 +111,8 @@ export function setRegion(id) {
 const isMainRegion = () => currentRegion() === mainId();
 const regionOffline = () => Object.assign(new Error('region data unavailable'), { regionOffline: true });
 /** Other region: its feed (https only here) then its own gist (CONFIG.REGIONS[].gistUser/gistId, optional). Never touches the data banner. */
-async function loadOther(file, ms = 5000) {
-  const r = regions().find((x) => x.id === currentRegion());
+async function loadOther(file, ms = 5000, regionId = currentRegion()) {
+  const r = regions().find((x) => x.id === regionId);
   const base = r ? usableFeed(r.feed) : '', ep = endpoint(file);
   const gist = r && /^[A-Za-z0-9_-]+$/.test(r.gistUser) && /^[a-f0-9]+$/i.test(r.gistId);
   if (base && ep) { try { return await getJson(base + '/api' + ep, ms); } catch (e) { if (!gist) throw regionOffline(); } }
@@ -199,6 +199,32 @@ export const getMatches = async (type = 'ranked') => {
   const src = sources(r, (d) => asList(d).map(normMatch));
   return src.length < 2 ? src[0].rows : mergeMatches(src);
 };
+
+/** Matches from EVERY region (ignores the region toggle): parallel, dead regions skipped, deduped by match id, newest first.
+ *  Rows from a non-main region carry region = its name (so the UI can chip them); main rows carry none. Throws only if all regions fail. */
+export async function getAllMatches(type = 'ranked') {
+  const t = type === 'unranked' ? 'unranked' : 'ranked';
+  const mi = Math.max(0, regions().findIndex((r) => r.id === 'main'));
+  const list = regions().length ? regions() : [{ id: 'main', name: 'NA' }];
+  const got = await Promise.all(list.map(async (r, i) => {
+    try {
+      const d = i === mi ? await load('matches-' + t) : await loadOther('matches-' + t, 5000, r.id);
+      return { first: i === mi, rows: asList(d).map(normMatch).map((m) => (i === mi ? m : { ...m, region: r.name })) };
+    } catch (e) { return { err: e }; }
+  }));
+  const ok = got.filter((g) => g.rows);
+  if (!ok.length) throw got[0].err;
+  const tms = (x) => (typeof x === 'number' ? (x < 1e11 ? x * 1000 : x) : new Date(x).getTime() || 0);
+  const seen = new Set(), out = [];
+  for (const g of ok.sort((a, b) => (b.first ? 1 : 0) - (a.first ? 1 : 0))) {   // main region wins duplicates
+    for (const m of g.rows) {
+      const k = m.id != null ? 'i' + m.id : `${tms(m.time)}|${m.winner}|${m.loser}|${m.kit}`;
+      if (seen.has(k)) continue;
+      seen.add(k); out.push(m);
+    }
+  }
+  return out.sort((a, b) => tms(b.time) - tms(a.time));
+}
 
 /** Other regions' profile of one player: their feed first, then their own gist players.json. Never throws; a dead region is skipped. */
 async function playerFromOthers(name) {
